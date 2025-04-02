@@ -21,12 +21,10 @@ int win_h = 600;
 
 int debugTog = 1;
 
-
-
 void debug(){
   SDL_SetRenderDrawColor(ren, 255, 255, 255, 255); // NOTE: text color
   SDL_RenderDebugText(ren, 10, 5, "ShareWare 0.0.1JAM Reguler Fleshy Guy");
-  SDL_RenderDebugText(ren, 10, 10, "FPS %i", fps);
+  SDL_RenderDebugText(ren, 10, 10, "FPS %i", fps); // NOTE: THIS should be capped at 30
 }
 
 void update() { // user inputs and things like that
