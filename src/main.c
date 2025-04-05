@@ -14,23 +14,24 @@
  *       if you dont know what its is you dont have to. :3c */
 
 /* TODO: 
- * [ ] Frame Rate Cap
- * [ ] Map
- * [ ] ViewPort
- * [ ] HUD 
+ *  [ ] Frame Rate Cap
+ *  [ ] Map
+ *  [ ] ViewPort
+ *  [ ] HUD 
  */
 
-#define FPS_CAP 30                // WARN: I DONT THINK IM DOING THIS RIGHT
-#define DELTA_TIME 1000 / FPS_CAP //       LIKE AT ALL >:3c
+#define FPS_CAP 30                 // WARN: I DONT THINK IM DOING THIS RIGHT
+#define DELTA_TIME 1000 / FPS_CAP  //       LIKE AT ALL >:3c
 
-SDL_Renderer *ren = NULL;
-SDL_Window *win = NULL;
+static SDL_Renderer *ren = NULL;
+static SDL_Window *win = NULL;
 
 int shouldQuit = 0;  // should quit is true so I can have it !
 
 int win_w, win_h; // holds the windows size
 
 int debugTog = 1;
+const char build[] = "ShareWare 0.0.3JAM";
 
 void update() { // user updates in a diffrent funcion to stay orginised
   SDL_Event evt;
@@ -40,14 +41,18 @@ void update() { // user updates in a diffrent funcion to stay orginised
     case SDL_EVENT_QUIT:
       shouldQuit = 1;
       break;
-    case SDL_EVENT_KEY_DOWN: // NOTE: KEYBOARD INPUT FOR THE GAME
+    case SDL_EVENT_KEY_DOWN:
       switch (evt.key.key) {
-        case SDLK_ESCAPE: // NOTE: EXAMPLE KEY is a quit key
+      
+      }
+    case SDL_EVENT_KEY_UP: 
+      switch (evt.key.key) {
+        case SDLK_ESCAPE: 
           shouldQuit = 1;
           break;
         case SDLK_F3:
-          debugTog = !debugTog; // BUG: THIS IS BARELY A BUG BUT, F3 CAN BE HELD DOWN THIS
-          break;                //      CAUSES THE DEBUG UI TO TOGGLE ON AND OFF REALY FAST
+          debugTog = !debugTog; 
+          break;
       }
     }
   }
@@ -59,12 +64,12 @@ GameState gState = 0;
 void debug(){
   #define MARGEN 10
   
-  // NOTE: THE TEXT IS 10pix PER LINE
+  // NOTE: THE TEXT IS 10pix PER NEW LINE
 
   SDL_SetRenderDrawColor(ren, 255, 255, 255, 255); // NOTE: text color
-  SDL_RenderDebugText(ren, MARGEN, 10, "Reguler Fleshy Guy: ShareWare 0.0.1JAM");
-  SDL_RenderDebugText(ren, MARGEN, 20, "FPS "); // NOTE: THIS should be CAPPED at 30
-  SDL_RenderDebugText(ren, MARGEN, 30, "Map Run Time "); // NOTE: Timer of how long you have been on the map
+  SDL_RenderDebugTextFormat(ren, MARGEN, 10, "Reguler Fleshy Guy: %s", build);
+  SDL_RenderDebugTextFormat(ren, MARGEN, 20, "FPS "); // NOTE: THIS should be CAPPED at 30
+  SDL_RenderDebugTextFormat(ren, MARGEN, 30, "Map Run Time "); // NOTE: Timer of how long you have been on the map
 }
 
 void loop() { // the game loop right at the top not lost in main just here for our enjoyment
@@ -77,10 +82,8 @@ void loop() { // the game loop right at the top not lost in main just here for o
       debug();
     }
 
-    SDL_SetRenderDrawColor(ren, 0, 0, 0, 255); // NOTE: BACKGROUND COLOR change this to hot pink for errors later
-    
+    SDL_SetRenderDrawColor(ren, 0, 0, 0, 255); // NOTE: BACKGROUND COLOR change this to hot pink for errors later 
     SDL_RenderPresent(ren);
-
   }
 }
 
@@ -90,7 +93,7 @@ int main() {
   printf("WELCOME TO REGULER FLESHY GUY\nGame for the FrenJam\n");
   printf("Source Code can be found at *link* made in C :3\n");
   
-  SDL_SetAppMetadata("REGULER FLESHY GUY", "0.0.1JAM", NULL);
+  SDL_SetAppMetadata("REGULER FLESHY GUY", build, NULL);
   SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, "https://");
   SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, "game");
   SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, "Trent And Ramona");
@@ -110,8 +113,8 @@ int main() {
   
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) == 0) {
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "FOO ERORR",
-                             "FAILED To Init Video And Or Events", NULL); // the box will most likey fail
-    printf("FOO ERROR: FAILED To Init Video And Or Events %d\n", 1);      // if init failes but ehh... better to try
+                             "FAILED To Init Video And Or Events", NULL); // the box will most likey fail if the init failes
+    printf("FOO ERROR: FAILED To Init Video And Or Events %d\n", 1);      // thats why we have a printf fallback >:3c
     return 1;
   }
 
@@ -133,7 +136,7 @@ int main() {
     return 3;
   }
   
-  SDL_GetWindowSize(win, &win_w, &win_h); // this lets us center the viewport
+  SDL_GetWindowSize(win, &win_w, &win_h); // this lets us center the viewport,
                                           // and have borders yay
 
   //  TODO: add init for CIMGUI, file system and map file loading
