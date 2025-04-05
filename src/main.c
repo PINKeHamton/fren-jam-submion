@@ -38,21 +38,20 @@ void update() { // user updates in a diffrent funcion to stay orginised
 
   while (SDL_PollEvent(&evt)) {
     switch (evt.type) {
-    case SDL_EVENT_QUIT:
-      shouldQuit = 1;
-      break;
-    case SDL_EVENT_KEY_DOWN:
-      switch (evt.key.key) {
-      
+      case SDL_EVENT_QUIT:
+        shouldQuit = 1;
+        break; 
+      case SDL_EVENT_KEY_UP: 
+        switch (evt.key.key) {
+          case SDLK_F3:
+            debugTog = !debugTog; 
+            break;
       }
-    case SDL_EVENT_KEY_UP: 
-      switch (evt.key.key) {
-        case SDLK_ESCAPE: 
-          shouldQuit = 1;
-          break;
-        case SDLK_F3:
-          debugTog = !debugTog; 
-          break;
+    }
+    switch (evt.type) {
+      case SDL_EVENT_KEY_DOWN:
+        switch (evt.key.key) {
+           
       }
     }
   }
